@@ -1,6 +1,9 @@
-from typing import Dict, Any, List
+from typing import Dict, Any
 from .base_agent import BaseAgent
-from protocols.fuzzy_matcher import FuzzyConstraintMatcher
+try:
+    from ..protocols.fuzzy_matcher import FuzzyConstraintMatcher
+except ImportError:
+    from protocols.fuzzy_matcher import FuzzyConstraintMatcher
 
 class AgentC(BaseAgent):
     """Final agent that produces output and validates constraints"""
@@ -41,7 +44,7 @@ class AgentC(BaseAgent):
             "semantic_matching_used": True  # Flag for fairness
         }
     
-    
+    def _process_ccp(self, payload: Any) -> Dict[str, Any]:
         """Process structured CCP input"""
         # Handle different possible payload structures
         if isinstance(payload, str):
@@ -49,8 +52,11 @@ class AgentC(BaseAgent):
             import json
             try:
                 payload = json.loads(payload)
-            except:
+            except json.JSONDecodeError:
                 return self._process_text(payload)
+
+        if not isinstance(payload, dict):
+            return self._process_text(str(payload))
         
         # Extract constraints from different possible locations
         detected = {
@@ -105,19 +111,19 @@ class AgentC(BaseAgent):
         constraints = payload.get("constraints", [])
         if isinstance(constraints, list):
             for constraint in constraints:
-                constraint_lower = str(constraint).lower()
-                if "vegetarian" in constraint_lower:
-                    detected["vegetarian"] = True
-                if "peanut" in constraint_lower or "nut" in constraint_lower:
-                    detected["peanut_allergy"] = True
-                if "window" in constraint_lower and "seat" in constraint_lower:
-                    detected["window_seat"] = True
-                if "knee" in constraint_lower:
-                    detected["knee_injury"] = True
-                if "game" in constraint_lower:
-                    detected["gaming"] = True
-                if "food" in constraint_lower:
-                    detected["food_interest"] = True
+                self._detect_from_text(str(constraint), detected)
+
+        # Check extensible context entries used for open-world constraints
+        extended_context = payload.get("extended_context", [])
+        if isinstance(extended_context, list):
+            for entry in extended_context:
+                if isinstance(entry, dict):
+                    self._detect_from_text(
+                        f"{entry.get('key', '')}: {entry.get('value', '')}",
+                        detected
+                    )
+                else:
+                    self._detect_from_text(str(entry), detected)
         
         # Also check the request field
         request = payload.get("request", "")
@@ -138,6 +144,22 @@ class AgentC(BaseAgent):
             "protocol": "ccp",
             "original_payload": payload
         }
+
+    def _detect_from_text(self, text: str, detected: Dict[str, bool]) -> None:
+        """Update detection flags from a compact structured text fragment."""
+        text_lower = text.lower()
+        if "vegetarian" in text_lower:
+            detected["vegetarian"] = True
+        if "peanut" in text_lower or "nut" in text_lower:
+            detected["peanut_allergy"] = True
+        if "window" in text_lower and "seat" in text_lower:
+            detected["window_seat"] = True
+        if "knee" in text_lower:
+            detected["knee_injury"] = True
+        if "game" in text_lower or "gaming" in text_lower:
+            detected["gaming"] = True
+        if "food" in text_lower or "cuisine" in text_lower:
+            detected["food_interest"] = True
     
     def _generate_response(self, detected: Dict, protocol: str) -> str:
         """Generate final response based on detected constraints"""

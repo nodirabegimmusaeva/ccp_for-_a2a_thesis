@@ -4,3 +4,4 @@ matplotlib==3.7.2
 seaborn==0.12.2
 jsonschema==4.19.1
 colorama==0.4.6
+tqdm==4.67.1

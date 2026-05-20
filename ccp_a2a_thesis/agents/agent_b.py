@@ -1,7 +1,10 @@
 
 from typing import Any, Dict, Optional, Union
 from .base_agent import BaseAgent
-from protocols.drift_simulator import TextDriftSimulator, CCPDriftSimulator
+try:
+    from ..protocols.drift_simulator import TextDriftSimulator, CCPDriftSimulator
+except ImportError:
+    from protocols.drift_simulator import TextDriftSimulator, CCPDriftSimulator
 
 class AgentB(BaseAgent):
     """Middle agent that introduces context drift based on protocol"""

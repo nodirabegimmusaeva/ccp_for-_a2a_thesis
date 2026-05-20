@@ -2,11 +2,18 @@
 from typing import Dict, List, Any
 import random
 from tqdm import tqdm
-from agents import AgentA, AgentB, AgentC
-from core.metrics import MetricsCalculator
-from core.validator import OutputValidator
-from experiments.dataset import ExperimentDataset
-from config import NUM_TRIALS, SEED
+try:
+    from ..agents import AgentA, AgentB, AgentC
+    from ..core.metrics import MetricsCalculator
+    from ..core.validator import OutputValidator
+    from .dataset import ExperimentDataset
+    from ..config import NUM_TRIALS, SEED
+except ImportError:
+    from agents import AgentA, AgentB, AgentC
+    from core.metrics import MetricsCalculator
+    from core.validator import OutputValidator
+    from experiments.dataset import ExperimentDataset
+    from config import NUM_TRIALS, SEED
 
 class ExperimentRunner:
     """Orchestrates the entire experiment"""

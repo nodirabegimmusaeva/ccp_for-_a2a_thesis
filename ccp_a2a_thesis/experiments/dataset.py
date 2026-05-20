@@ -1,6 +1,9 @@
 """Experiment dataset management"""
 from typing import List, Dict
-from core.task import TaskManager, Task
+try:
+    from ..core.task import TaskManager, Task
+except ImportError:
+    from core.task import TaskManager, Task
 
 class ExperimentDataset:
     """Manages the experimental dataset"""

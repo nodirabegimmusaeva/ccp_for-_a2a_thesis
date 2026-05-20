@@ -1,8 +1,12 @@
 
 from typing import Dict, Any
 from .base_agent import BaseAgent
-from protocols.text_protocol import TextBuilder
-from protocols.ccp_protocol import CCPBuilder
+try:
+    from ..protocols.text_protocol import TextBuilder
+    from ..protocols.ccp_protocol import CCPBuilder
+except ImportError:
+    from protocols.text_protocol import TextBuilder
+    from protocols.ccp_protocol import CCPBuilder
 
 class AgentA(BaseAgent):
     """First agent that receives user request and formats it for next agent"""
