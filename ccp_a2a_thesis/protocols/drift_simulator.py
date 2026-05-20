@@ -1,10 +1,34 @@
-
+"""Context drift simulation for both protocols"""
 import random
 import logging
-from typing import Dict, List, Tuple, Any, Union
-from config import CONSTRAINT_DRIFT_PROBS, SEMANTIC_VARIATIONS
+from typing import Dict, List, Tuple, Any
 
+# Configure logging
 logger = logging.getLogger(__name__)
+
+# Import from config
+try:
+    from config import CONSTRAINT_DRIFT_PROBS, SEMANTIC_VARIATIONS
+except ImportError:
+    # Fallback config if import fails
+    CONSTRAINT_DRIFT_PROBS = {
+        "allergy": 0.12,
+        "injury": 0.15,
+        "diet": 0.25,
+        "seat": 0.28,
+        "purpose": 0.35,
+        "interest": 0.38,
+    }
+    
+    SEMANTIC_VARIATIONS = {
+        "vegetarian": ["vegetarian", "veg meal", "no meat", "plant-based"],
+        "peanut allergy": ["allergic to peanuts", "peanut allergy", "no peanuts"],
+        "window seat": ["window seat", "seat by window", "prefer window"],
+        "knee pain": ["knee injury", "bad knee", "knee pain"],
+        "gaming": ["gaming", "for games", "gaming laptop"],
+        "food": ["food tourism", "local cuisine", "food experiences"],
+    }
+
 
 class TextDriftSimulator:
     """Simulates realistic context drift in unstructured communication"""
@@ -31,7 +55,6 @@ class TextDriftSimulator:
             if random.random() < drift_prob:
                 # Handle constraint_value if it's a string or list
                 if isinstance(constraint_value, list):
-                    # If it's a list, take the first item or join them
                     value_str = constraint_value[0] if constraint_value else ""
                 else:
                     value_str = constraint_value
@@ -127,22 +150,33 @@ class CCPDriftSimulator:
         drift_events = []
         
         failure_mode = random.choice([
-            "schema_mismatch", "constraint_dropped", "field_type_error"
+            "schema_mismatch", 
+            "constraint_dropped", 
+            "field_type_error"
         ])
         
         if failure_mode == "schema_mismatch" and "metadata" in processed:
             del processed["metadata"]
-            drift_events.append({"type": "schema_mismatch"})
+            drift_events.append({
+                "type": "schema_mismatch",
+                "description": "Metadata field lost due to version mismatch"
+            })
         
         elif failure_mode == "constraint_dropped" and "constraints" in processed:
-            if processed["constraints"]:
+            if processed["constraints"] and len(processed["constraints"]) > 0:
                 dropped = processed["constraints"].pop(0)
-                drift_events.append({"type": "constraint_dropped", "constraint": dropped})
+                drift_events.append({
+                    "type": "constraint_dropped", 
+                    "constraint": dropped
+                })
         
         elif failure_mode == "field_type_error" and "context" in processed:
             if isinstance(processed["context"].get("allergy"), str):
                 processed["context"]["allergy"] = [processed["context"]["allergy"]]
-                drift_events.append({"type": "type_coercion"})
+                drift_events.append({
+                    "type": "type_coercion",
+                    "description": "Allergy field converted from string to list"
+                })
         
         drift_report = {
             "drift_occurred": True,
@@ -162,5 +196,41 @@ class CCPDriftSimulator:
         return {
             "total_processed": len(self.drift_log),
             "drift_rate": drifted / len(self.drift_log) if self.drift_log else 0,
-            "drifted_count": drifted
+            "drifted_count": drifted,
+            "failure_modes": [l.get("failure_mode") for l in self.drift_log if l.get("drift_occurred")]
         }
+
+
+# Semantic Mutation Simulator for realistic drift (optional enhancement)
+class SemanticMutationSimulator:
+    """Simulates realistic semantic mutation instead of random deletion"""
+    
+    MUTATION_PATTERNS = {
+        "vegetarian": [
+            ("vegetarian", "meatless"),
+            ("vegetarian dinner", "meal without meat"),
+            ("strict vegetarian", "vegetarian preferred")
+        ],
+        "peanut allergy": [
+            ("peanut allergy", "nut sensitivity"),
+            ("allergic to peanuts", "prefers no peanuts"),
+            ("severe peanut allergy", "peanut-free preferred")
+        ],
+        "window seat": [
+            ("window seat", "seat with view"),
+            ("prefer window", "like window if available")
+        ]
+    }
+    
+    @classmethod
+    def mutate(cls, text: str, constraint: str, value: str) -> str:
+        """Apply semantic mutation rather than deletion"""
+        constraint_lower = constraint.lower()
+        if constraint_lower in cls.MUTATION_PATTERNS:
+            for original, mutated in cls.MUTATION_PATTERNS[constraint_lower]:
+                if original.lower() in text.lower():
+                    # Mutate meaning instead of deleting
+                    return text.replace(original, mutated)
+        
+        # Fallback: soften the constraint instead of deleting
+        return text.replace(value, f"preferably {value} if possible")

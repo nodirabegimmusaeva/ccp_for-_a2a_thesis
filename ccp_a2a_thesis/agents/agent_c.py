@@ -1,6 +1,6 @@
-
 from typing import Dict, Any, List
 from .base_agent import BaseAgent
+from protocols.fuzzy_matcher import FuzzyConstraintMatcher
 
 class AgentC(BaseAgent):
     """Final agent that produces output and validates constraints"""
@@ -28,29 +28,20 @@ class AgentC(BaseAgent):
         return output
     
     def _process_text(self, text: str) -> Dict[str, Any]:
-        """Process unstructured text input"""
-        text_lower = text.lower()
+        """Process unstructured text input with semantic matching"""
+        # Use fuzzy semantic matching instead of rigid keywords
+        detected = FuzzyConstraintMatcher.extract_all_constraints(text)
         
-        # Detect constraints via keyword matching
-        detected = {
-            "vegetarian": "vegetarian" in text_lower or "veg meal" in text_lower,
-            "peanut_allergy": "peanut" in text_lower and ("allergy" in text_lower or "allergic" in text_lower),
-            "window_seat": "window" in text_lower and ("seat" in text_lower or "prefer" in text_lower),
-            "knee_injury": "knee" in text_lower and ("injury" in text_lower or "pain" in text_lower),
-            "gaming": "gaming" in text_lower or "game" in text_lower,
-            "food_interest": "food" in text_lower or "cuisine" in text_lower or "culinary" in text_lower
-        }
-        
-        # Generate response based on detected constraints
         response = self._generate_response(detected, "text")
         
         return {
             "response": response,
             "detected_constraints": detected,
-            "protocol": "text"
+            "protocol": "text",
+            "semantic_matching_used": True  # Flag for fairness
         }
     
-    def _process_ccp(self, payload: Dict) -> Dict[str, Any]:
+    
         """Process structured CCP input"""
         # Handle different possible payload structures
         if isinstance(payload, str):
