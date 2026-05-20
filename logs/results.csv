@@ -1,0 +1,251 @@
+task_id,trial,text_output,text_accuracy,ccp_output,ccp_accuracy,crs
+001,1,Vegetarian peanut curry,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,2,Vegetarian tofu rice bowl without peanuts,1,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,3,Vegetarian peanut curry,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,4,Vegetarian tofu rice bowl without peanuts,1,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,5,Vegetarian tofu rice bowl without peanuts,1,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,6,Vegetarian tofu rice bowl without peanuts,1,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,7,Vegetarian peanut curry,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,8,Chicken steak,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,9,Vegetarian peanut curry,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,10,Vegetarian peanut curry,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,11,Vegetarian tofu rice bowl without peanuts,1,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,12,Vegetarian tofu rice bowl without peanuts,1,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,13,Vegetarian peanut curry,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,14,Chicken steak,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,15,Vegetarian peanut curry,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,16,Vegetarian tofu rice bowl without peanuts,1,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,17,Chicken steak,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,18,Vegetarian peanut curry,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,19,Chicken steak,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,20,Vegetarian tofu rice bowl without peanuts,1,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,21,Vegetarian peanut curry,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,22,Chicken steak,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,23,Vegetarian tofu rice bowl without peanuts,1,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,24,Chicken steak,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,25,Chicken steak,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,26,Vegetarian tofu rice bowl without peanuts,1,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,27,Vegetarian peanut curry,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,28,Vegetarian peanut curry,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,29,Vegetarian tofu rice bowl without peanuts,1,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,30,Vegetarian tofu rice bowl without peanuts,1,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,31,Chicken steak,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,32,Vegetarian tofu rice bowl without peanuts,1,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,33,Vegetarian peanut curry,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,34,Vegetarian peanut curry,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,35,Chicken steak,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,36,Chicken steak,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,37,Chicken steak,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,38,Chicken steak,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,39,Chicken steak,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,40,Vegetarian tofu rice bowl without peanuts,1,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,41,Chicken steak,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,42,Chicken steak,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,43,Vegetarian tofu rice bowl without peanuts,1,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,44,Vegetarian tofu rice bowl without peanuts,1,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,45,Vegetarian tofu rice bowl without peanuts,1,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,46,Vegetarian peanut curry,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,47,Chicken steak,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,48,Vegetarian peanut curry,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,49,Vegetarian tofu rice bowl without peanuts,1,Vegetarian tofu rice bowl without peanuts,1,1.0
+001,50,Vegetarian peanut curry,0,Vegetarian tofu rice bowl without peanuts,1,1.0
+002,1,Cheap Tokyo flight,0,Low-cost flight to Tokyo with window seat,1,1.0
+002,2,Cheap Tokyo flight,0,Low-cost flight to Tokyo with window seat,1,1.0
+002,3,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,4,Cheap Tokyo flight,0,Low-cost flight to Tokyo with window seat,1,1.0
+002,5,Cheap Tokyo flight,0,Low-cost flight to Tokyo with window seat,1,1.0
+002,6,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,7,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,8,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,9,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,10,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,11,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,12,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,13,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,14,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,15,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,16,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,17,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,18,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,19,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,20,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,21,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,22,Cheap Tokyo flight,0,Low-cost flight to Tokyo with window seat,1,1.0
+002,23,Cheap Tokyo flight,0,Low-cost flight to Tokyo with window seat,1,1.0
+002,24,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,25,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,26,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,27,Cheap Tokyo flight,0,Low-cost flight to Tokyo with window seat,1,1.0
+002,28,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,29,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,30,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,31,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,32,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,33,Cheap Tokyo flight,0,Low-cost flight to Tokyo with window seat,1,1.0
+002,34,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,35,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,36,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,37,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,38,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,39,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,40,Cheap Tokyo flight,0,Low-cost flight to Tokyo with window seat,1,1.0
+002,41,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,42,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,43,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,44,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,45,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,46,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,47,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,48,Cheap Tokyo flight,0,Low-cost flight to Tokyo with window seat,1,1.0
+002,49,Low-cost flight to Tokyo with window seat,1,Low-cost flight to Tokyo with window seat,1,1.0
+002,50,Cheap Tokyo flight,0,Low-cost flight to Tokyo with window seat,1,1.0
+003,1,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,2,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,3,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,4,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,5,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,6,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,7,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,8,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,9,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,10,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,11,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,12,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,13,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,14,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,15,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,16,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,17,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,18,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,19,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,20,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,21,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,22,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,23,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,24,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,25,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,26,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,27,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,28,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,29,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,30,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,31,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,32,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,33,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,34,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,35,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,36,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,37,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,38,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,39,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,40,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,41,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,42,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,43,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,44,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,45,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,46,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,47,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,48,High-impact jumping workout,0,Low-impact walking and cycling plan,1,1.0
+003,49,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+003,50,Low-impact walking and cycling plan,1,Low-impact walking and cycling plan,1,1.0
+004,1,Office laptop,0,Gaming laptop with RTX graphics,1,1.0
+004,2,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,3,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,4,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,5,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,6,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,7,Office laptop,0,Gaming laptop with RTX graphics,1,1.0
+004,8,Office laptop,0,Gaming laptop with RTX graphics,1,1.0
+004,9,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,10,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,11,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,12,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,13,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,14,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,15,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,16,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,17,Office laptop,0,Gaming laptop with RTX graphics,1,1.0
+004,18,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,19,Office laptop,0,Gaming laptop with RTX graphics,1,1.0
+004,20,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,21,Office laptop,0,Gaming laptop with RTX graphics,1,1.0
+004,22,Office laptop,0,Gaming laptop with RTX graphics,1,1.0
+004,23,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,24,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,25,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,26,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,27,Office laptop,0,Gaming laptop with RTX graphics,1,1.0
+004,28,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,29,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,30,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,31,Office laptop,0,Gaming laptop with RTX graphics,1,1.0
+004,32,Office laptop,0,Gaming laptop with RTX graphics,1,1.0
+004,33,Office laptop,0,Gaming laptop with RTX graphics,1,1.0
+004,34,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,35,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,36,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,37,Office laptop,0,Gaming laptop with RTX graphics,1,1.0
+004,38,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,39,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,40,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,41,Office laptop,0,Gaming laptop with RTX graphics,1,1.0
+004,42,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,43,Office laptop,0,Gaming laptop with RTX graphics,1,1.0
+004,44,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,45,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,46,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,47,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,48,Office laptop,0,Gaming laptop with RTX graphics,1,1.0
+004,49,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+004,50,Gaming laptop with RTX graphics,1,Gaming laptop with RTX graphics,1,1.0
+005,1,Museum itinerary,0,5-day Japan food tour itinerary,1,1.0
+005,2,Museum itinerary,0,5-day Japan food tour itinerary,1,1.0
+005,3,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,4,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,5,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,6,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,7,Museum itinerary,0,5-day Japan food tour itinerary,1,1.0
+005,8,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,9,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,10,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,11,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,12,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,13,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,14,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,15,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,16,Museum itinerary,0,5-day Japan food tour itinerary,1,1.0
+005,17,Museum itinerary,0,5-day Japan food tour itinerary,1,1.0
+005,18,Museum itinerary,0,5-day Japan food tour itinerary,1,1.0
+005,19,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,20,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,21,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,22,Museum itinerary,0,5-day Japan food tour itinerary,1,1.0
+005,23,Museum itinerary,0,5-day Japan food tour itinerary,1,1.0
+005,24,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,25,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,26,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,27,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,28,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,29,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,30,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,31,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,32,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,33,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,34,Museum itinerary,0,5-day Japan food tour itinerary,1,1.0
+005,35,Museum itinerary,0,5-day Japan food tour itinerary,1,1.0
+005,36,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,37,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,38,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,39,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,40,Museum itinerary,0,5-day Japan food tour itinerary,1,1.0
+005,41,Museum itinerary,0,5-day Japan food tour itinerary,1,1.0
+005,42,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,43,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,44,Museum itinerary,0,5-day Japan food tour itinerary,1,1.0
+005,45,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,46,Museum itinerary,0,5-day Japan food tour itinerary,1,1.0
+005,47,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,48,5-day Japan food tour itinerary,1,5-day Japan food tour itinerary,1,1.0
+005,49,Museum itinerary,0,5-day Japan food tour itinerary,1,1.0
+005,50,Museum itinerary,0,5-day Japan food tour itinerary,1,1.0

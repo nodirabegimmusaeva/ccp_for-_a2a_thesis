@@ -1,0 +1,64 @@
+[
+	{
+		"task_id": "001",
+		"request": "Recommend a dinner meal",
+		"context": {
+			"diet": "vegetarian",
+			"allergy": "peanuts"
+		},
+		"ground_truth": {
+			"must_not_include": ["peanuts", "chicken", "beef"],
+			"must_include": ["vegetarian"]
+		}
+	},
+
+	{
+		"task_id": "002",
+		"request": "Book a flight",
+		"context": {
+			"destination": "Tokyo",
+			"budget": "low",
+			"seat": "window"
+		},
+		"ground_truth": {
+			"must_include": ["Tokyo", "window"]
+		}
+	},
+
+	{
+		"task_id": "003",
+		"request": "Suggest a workout plan",
+		"context": {
+			"injury": "knee pain",
+			"goal": "weight loss"
+		},
+		"ground_truth": {
+			"must_not_include": ["jumping", "high-impact"]
+		}
+	},
+
+	{
+		"task_id": "004",
+		"request": "Recommend a laptop",
+		"context": {
+			"budget": "1000",
+			"purpose": "gaming"
+		},
+		"ground_truth": {
+			"must_include": ["gaming"]
+		}
+	},
+
+	{
+		"task_id": "005",
+		"request": "Plan a travel itinerary",
+		"context": {
+			"country": "Japan",
+			"duration": "5 days",
+			"interest": "food"
+		},
+		"ground_truth": {
+			"must_include": ["Japan", "food"]
+		}
+	}
+]

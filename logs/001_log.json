@@ -1,0 +1,12 @@
+{
+    "task_id": "001",
+    "text_mode": {
+        "final_output": "Vegetarian tofu rice bowl without peanuts",
+        "accuracy": 1
+    },
+    "ccp_mode": {
+        "final_output": "Vegetarian peanut curry",
+        "accuracy": 1,
+        "crs": 1.0
+    }
+}
