@@ -60,7 +60,7 @@ class ExperimentRunner:
         text_result = self._run_text_protocol(task)
         
         # CCP protocol
-        ccp_result = self._run_ccp_protocol(task)
+        ccp_result = self._run_ccp_protocol(task, trial_num)
         
         return {
             "trial": trial_num,
@@ -104,7 +104,7 @@ class ExperimentRunner:
             "drift_report": agent_b.get_drift_stats()
         }
     
-    def _run_ccp_protocol(self, task) -> Dict:
+    def _run_ccp_protocol(self, task, trial_num: int) -> Dict:
         """Execute CCP-based communication"""
         agent_a = AgentA()
         agent_b = AgentB(drift_mode="realistic")
@@ -114,7 +114,8 @@ class ExperimentRunner:
         agent_b_output = agent_b.process(
             agent_a_output, 
             protocol="ccp",
-            original_constraints=task.constraints
+            original_constraints=task.constraints,
+            trial_id=trial_num
         )
         agent_c_output = agent_c.process(agent_b_output, protocol="ccp")
         

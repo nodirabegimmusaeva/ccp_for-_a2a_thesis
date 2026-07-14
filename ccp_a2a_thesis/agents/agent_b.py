@@ -25,7 +25,8 @@ class AgentB(BaseAgent):
         self, 
         input_data: Union[str, Dict], 
         protocol: str = "text",
-        original_constraints: Optional[Dict] = None
+        original_constraints: Optional[Dict] = None,
+        trial_id: Optional[int] = None
     ) -> Any:
         """
         Process input with appropriate drift simulation
@@ -34,6 +35,7 @@ class AgentB(BaseAgent):
             input_data: Text string or CCP dictionary
             protocol: "text" or "ccp"
             original_constraints: Original constraints for drift tracking
+            trial_id: Trial number used for reproducible CCP drift
         
         Returns:
             Processed output (potentially with drift)
@@ -46,7 +48,12 @@ class AgentB(BaseAgent):
                 self.current_constraints
             )
         else:  # ccp
-            output, drift_report = self.ccp_drift.process(input_data)
+            task_id = input_data.get("task_id") if isinstance(input_data, dict) else None
+            output, drift_report = self.ccp_drift.process(
+                input_data,
+                trial_id=trial_id,
+                task_id=task_id,
+            )
         
         self.log_interaction(
             input_data, 
