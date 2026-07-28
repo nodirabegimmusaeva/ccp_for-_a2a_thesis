@@ -9,13 +9,14 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import socket
 import sys
 import time
 import urllib.error
 import urllib.request
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -125,6 +126,8 @@ class LLMClient:
         api_mode: str,
         temperature: Optional[float],
         timeout: int,
+        retries: int,
+        retry_backoff: float,
     ) -> None:
         self.api_key = api_key
         self.model = model
@@ -132,6 +135,8 @@ class LLMClient:
         self.api_mode = api_mode
         self.temperature = temperature
         self.timeout = timeout
+        self.retries = retries
+        self.retry_backoff = retry_backoff
         self.api_call_log: List[Dict[str, Any]] = []
 
     def complete_json(
@@ -139,6 +144,15 @@ class LLMClient:
     ) -> Dict[str, Any]:
         text = self.complete_text(system, user, call_label=call_label)
         return self._parse_json(text)
+
+    def complete_json_with_text(
+        self, system: str, user: str, call_label: Optional[Dict[str, Any]] = None
+    ) -> Tuple[Optional[Dict[str, Any]], str, Optional[str]]:
+        text = self.complete_text(system, user, call_label=call_label)
+        try:
+            return self._parse_json(text), text, None
+        except json.JSONDecodeError as exc:
+            return None, text, str(exc)
 
     def complete_text(
         self, system: str, user: str, call_label: Optional[Dict[str, Any]] = None
@@ -173,40 +187,82 @@ class LLMClient:
         call_label: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
         body = json.dumps(payload).encode("utf-8")
-        started_at = time.time()
-        request = urllib.request.Request(
-            f"{self.base_url}{path}",
-            data=body,
-            headers={
-                "Authorization": f"Bearer {self.api_key}",
-                "Content-Type": "application/json",
-            },
-            method="POST",
-        )
-        try:
-            with urllib.request.urlopen(request, timeout=self.timeout) as response:
-                response_body = json.loads(response.read().decode("utf-8"))
+        max_attempts = self.retries + 1
+        for attempt in range(max_attempts):
+            started_at = time.time()
+            request = urllib.request.Request(
+                f"{self.base_url}{path}",
+                data=body,
+                headers={
+                    "Authorization": f"Bearer {self.api_key}",
+                    "Content-Type": "application/json",
+                },
+                method="POST",
+            )
+            try:
+                with urllib.request.urlopen(request, timeout=self.timeout) as response:
+                    response_body = json.loads(response.read().decode("utf-8"))
+                    self._log_api_call(
+                        path=path,
+                        payload=payload,
+                        status_code=response.status,
+                        response_body=response_body,
+                        started_at=started_at,
+                        call_label=call_label,
+                        attempt=attempt,
+                        max_attempts=max_attempts,
+                    )
+                    return response_body
+            except urllib.error.HTTPError as exc:
+                detail = exc.read().decode("utf-8", errors="replace")
                 self._log_api_call(
                     path=path,
                     payload=payload,
-                    status_code=response.status,
-                    response_body=response_body,
+                    status_code=exc.code,
+                    response_body=None,
                     started_at=started_at,
                     call_label=call_label,
+                    error_body=detail,
+                    attempt=attempt,
+                    max_attempts=max_attempts,
                 )
-                return response_body
-        except urllib.error.HTTPError as exc:
-            detail = exc.read().decode("utf-8", errors="replace")
-            self._log_api_call(
-                path=path,
-                payload=payload,
-                status_code=exc.code,
-                response_body=None,
-                started_at=started_at,
-                call_label=call_label,
-                error_body=detail,
+                if not self._should_retry_http(exc.code, detail, attempt, max_attempts):
+                    raise RuntimeError(f"API request failed ({exc.code}): {detail}") from exc
+            except (TimeoutError, socket.timeout, urllib.error.URLError) as exc:
+                self._log_api_call(
+                    path=path,
+                    payload=payload,
+                    status_code=0,
+                    response_body=None,
+                    started_at=started_at,
+                    call_label=call_label,
+                    error_body=str(exc),
+                    attempt=attempt,
+                    max_attempts=max_attempts,
+                )
+                if attempt >= max_attempts - 1:
+                    raise RuntimeError(
+                        f"API request failed after {max_attempts} attempts: {exc}"
+                    ) from exc
+            sleep_seconds = self.retry_backoff * (2**attempt)
+            print(
+                f"\n  transient API failure; retrying in {sleep_seconds:.1f}s "
+                f"(attempt {attempt + 2}/{max_attempts})",
+                flush=True,
             )
-            raise RuntimeError(f"API request failed ({exc.code}): {detail}") from exc
+            time.sleep(sleep_seconds)
+
+        raise RuntimeError("API request failed for an unknown reason.")
+
+    @staticmethod
+    def _should_retry_http(
+        status_code: int, detail: str, attempt: int, max_attempts: int
+    ) -> bool:
+        if attempt >= max_attempts - 1:
+            return False
+        if status_code == 429 and "insufficient_quota" not in detail:
+            return True
+        return status_code in {408, 409, 500, 502, 503, 504}
 
     def _log_api_call(
         self,
@@ -217,11 +273,15 @@ class LLMClient:
         started_at: float,
         call_label: Optional[Dict[str, Any]],
         error_body: Optional[str] = None,
+        attempt: int = 0,
+        max_attempts: int = 1,
     ) -> None:
         self.api_call_log.append(
             {
                 "call_index": len(self.api_call_log),
                 "label": call_label or {},
+                "attempt": attempt + 1,
+                "max_attempts": max_attempts,
                 "request": {
                     "url": f"{self.base_url}{path}",
                     "api_mode": self.api_mode,
@@ -266,8 +326,61 @@ class LLMClient:
             start = cleaned.find("{")
             end = cleaned.rfind("}")
             if start >= 0 and end > start:
-                return json.loads(cleaned[start : end + 1])
-            raise
+                snippet = cleaned[start : end + 1]
+                try:
+                    return json.loads(snippet)
+                except json.JSONDecodeError:
+                    repaired = LLMClient._repair_common_json_issues(snippet)
+                    try:
+                        return json.loads(repaired)
+                    except json.JSONDecodeError:
+                        # Try repairing the full cleaned text as a fallback
+                        repaired_full = LLMClient._repair_common_json_issues(cleaned)
+                        start_full = repaired_full.find("{")
+                        end_full = repaired_full.rfind("}")
+                        if start_full >= 0 and end_full > start_full:
+                            final_snippet = repaired_full[start_full : end_full + 1]
+                            return json.loads(final_snippet)
+                        raise
+            # If we can't find JSON braces, try repairing the full text
+            repaired_full = LLMClient._repair_common_json_issues(cleaned)
+            try:
+                return json.loads(repaired_full)
+            except json.JSONDecodeError:
+                # One more attempt: extract JSON from repaired text
+                start_full = repaired_full.find("{")
+                end_full = repaired_full.rfind("}")
+                if start_full >= 0 and end_full > start_full:
+                    final_snippet = repaired_full[start_full : end_full + 1]
+                    return json.loads(final_snippet)
+                raise
+
+    @staticmethod
+    def _repair_common_json_issues(text: str) -> str:
+        # Handles the most common malformed judge response: unescaped newlines
+        # inside strings. This is intentionally conservative and still raises if
+        # the JSON is structurally broken in other ways.
+        repaired = []
+        in_string = False
+        escaped = False
+        for char in text:
+            if escaped:
+                repaired.append(char)
+                escaped = False
+                continue
+            if char == "\\":
+                repaired.append(char)
+                escaped = True
+                continue
+            if char == '"':
+                in_string = not in_string
+                repaired.append(char)
+                continue
+            if in_string and char in {"\n", "\r"}:
+                repaired.append("\\n")
+                continue
+            repaired.append(char)
+        return "".join(repaired)
 
 
 class RealLLMComparison:
@@ -279,6 +392,7 @@ class RealLLMComparison:
         agent_b_mode: str,
         hops: int,
         judge: bool,
+        progress_callback: Optional[Callable[[Dict[str, Any]], None]] = None,
     ) -> None:
         self.client = client
         self.trials = trials
@@ -286,31 +400,14 @@ class RealLLMComparison:
         self.agent_b_mode = agent_b_mode
         self.hops = hops
         self.judge = judge
+        self.progress_callback = progress_callback
         self.agent_a = AgentA()
 
     def run(self, tasks: List[Task]) -> Dict[str, Any]:
         run_started_at_unix = time.time()
         run_started_at_local = local_timestamp()
         task_results = []
-        for task in tasks:
-            print(f"\nTask {task.task_id}: {task.category}")
-            trials = []
-            for trial in range(self.trials):
-                print(f"  trial {trial + 1}/{self.trials}: text", end="", flush=True)
-                text_result = self._run_protocol(task, "text", trial)
-                self._pause()
-                print(", ccp", end="", flush=True)
-                ccp_result = self._run_protocol(task, "ccp", trial)
-                print(" done")
-                trials.append({"trial": trial, "text": text_result, "ccp": ccp_result})
-                self._pause()
-            task_results.append(
-                {"task_id": task.task_id, "category": task.category, "trials": trials}
-            )
-
-        summary = aggregate_results(task_results)
-        run_completed_at_unix = time.time()
-        return {
+        result = {
             "metadata": {
                 "model": self.client.model,
                 "api_mode": self.client.api_mode,
@@ -321,14 +418,43 @@ class RealLLMComparison:
                 "judge_enabled": self.judge,
                 "created_at_unix": run_started_at_unix,
                 "created_at_local": run_started_at_local,
-                "completed_at_unix": run_completed_at_unix,
-                "completed_at_local": local_timestamp(),
                 "prompts": self._prompt_manifest(),
             },
-            "summary": summary,
+            "summary": aggregate_results(task_results),
             "tasks": task_results,
             "api_calls": self.client.api_call_log,
         }
+        for task in tasks:
+            print(f"\nTask {task.task_id}: {task.category}")
+            task_result = {"task_id": task.task_id, "category": task.category, "trials": []}
+            task_results.append(task_result)
+            for trial in range(self.trials):
+                print(f"  trial {trial + 1}/{self.trials}: text", end="", flush=True)
+                text_result = self._run_protocol(task, "text", trial)
+                self._pause()
+                print(", ccp", end="", flush=True)
+                ccp_result = self._run_protocol(task, "ccp", trial)
+                print(" done")
+                task_result["trials"].append(
+                    {"trial": trial, "text": text_result, "ccp": ccp_result}
+                )
+                result["summary"] = aggregate_results(task_results)
+                result["metadata"]["last_checkpoint_at_unix"] = time.time()
+                result["metadata"]["last_checkpoint_at_local"] = local_timestamp()
+                result["api_calls"] = self.client.api_call_log
+                if self.progress_callback is not None:
+                    self.progress_callback(result)
+                self._pause()
+
+        summary = aggregate_results(task_results)
+        run_completed_at_unix = time.time()
+        result["summary"] = summary
+        result["metadata"]["completed_at_unix"] = run_completed_at_unix
+        result["metadata"]["completed_at_local"] = local_timestamp()
+        result["api_calls"] = self.client.api_call_log
+        if self.progress_callback is not None:
+            self.progress_callback(result)
+        return result
 
     def _run_protocol(self, task: Task, protocol: str, trial: int) -> Dict[str, Any]:
         agent_a_output = self.agent_a.process(task.to_dict(), protocol=protocol)
@@ -393,7 +519,7 @@ class RealLLMComparison:
             )
             return output, output
 
-        raw_output = self.client.complete_json(
+        raw_output, raw_text, parse_error = self.client.complete_json_with_text(
             system=system_prompt,
             user=(
                 f"Current agent: {hop_label}\n"
@@ -402,6 +528,15 @@ class RealLLMComparison:
             ),
             call_label=call_label,
         )
+        if raw_output is None:
+            raw_output = {
+                "parse_error": parse_error,
+                "raw_model_output": raw_text,
+                "processing_notes": (
+                    "Model returned malformed JSON. The harness preserved the "
+                    "previous valid CCP payload for downstream evaluation."
+                ),
+            }
         normalized_output = self._normalize_ccp_payload(payload, raw_output, hop_agent_id)
         return normalized_output, raw_output
 
@@ -447,7 +582,7 @@ class RealLLMComparison:
         self, task: Task, protocol: str, payload: Any, trial: int
     ) -> Dict[str, Any]:
         payload_text = payload if isinstance(payload, str) else json.dumps(payload, indent=2)
-        result = self.client.complete_json(
+        result, raw_text, parse_error = self.client.complete_json_with_text(
             system=AGENT_C_PROMPT,
             user=f"Protocol: {protocol}\nMessage from previous agent:\n{payload_text}",
             call_label={
@@ -459,6 +594,14 @@ class RealLLMComparison:
                 "role": "final_decision",
             },
         )
+        if result is None:
+            return {
+                "response": raw_text,
+                "detected_constraints": dict(DETECTION_KEYS),
+                "protocol": protocol,
+                "parse_error": parse_error,
+                "raw_agent_c_output": raw_text,
+            }
         detected = dict(DETECTION_KEYS)
         detected.update(result.get("detected_constraints", {}))
         return {
@@ -472,7 +615,7 @@ class RealLLMComparison:
     def _judge_response(
         self, task: Task, protocol: str, final_output: Dict[str, Any], trial: int
     ) -> Dict[str, Any]:
-        result = self.client.complete_json(
+        result, raw_text, parse_error = self.client.complete_json_with_text(
             system=JUDGE_PROMPT,
             user=(
                 f"Protocol: {protocol}\n"
@@ -488,6 +631,16 @@ class RealLLMComparison:
                 "role": "constraint_respect_judge",
             },
         )
+        if result is None:
+            return {
+                "violations": ["judge_parse_error"],
+                "contradictions": [],
+                "completion_issues": ["judge returned malformed JSON"],
+                "score": 0.0,
+                "notes": "Judge output could not be parsed as JSON.",
+                "parse_error": parse_error,
+                "raw_judge_output": raw_text,
+            }
         violations = result.get("violations", [])
         if not isinstance(violations, list):
             violations = [str(violations)]
@@ -771,7 +924,11 @@ def dry_run(tasks: List[Task]) -> None:
         print(json.dumps(agent_a.process(task.to_dict(), protocol="ccp"), indent=2))
 
 
-def run_temperature_condition(args: argparse.Namespace, temperature: Optional[float]) -> Dict[str, Any]:
+def run_temperature_condition(
+    args: argparse.Namespace,
+    temperature: Optional[float],
+    progress_callback: Optional[Callable[[Dict[str, Any]], None]] = None,
+) -> Dict[str, Any]:
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         raise SystemExit("Set OPENAI_API_KEY or run with --dry-run.")
@@ -783,6 +940,8 @@ def run_temperature_condition(args: argparse.Namespace, temperature: Optional[fl
         api_mode=args.api_mode,
         temperature=temperature,
         timeout=args.timeout,
+        retries=args.retries,
+        retry_backoff=args.retry_backoff,
     )
     runner = RealLLMComparison(
         client,
@@ -791,6 +950,7 @@ def run_temperature_condition(args: argparse.Namespace, temperature: Optional[fl
         agent_b_mode=args.agent_b_mode,
         hops=args.hops,
         judge=args.judge,
+        progress_callback=progress_callback,
     )
     return runner.run(select_tasks(args.task))
 
@@ -804,19 +964,55 @@ def run_batch_conditions(args: argparse.Namespace) -> Dict[str, Any]:
     hops_values = args.hops_values or [args.hops]
     models = args.models or [args.model]
 
-    results = {
-        "metadata": {
-            "models": models,
-            "api_mode": args.api_mode,
-            "temperature_conditions": temperatures,
-            "agent_b_modes": modes,
-            "hops_values": hops_values,
-            "trials_per_task": args.trials,
-            "judge_enabled": args.judge,
-            "created_at_unix": run_started_at_unix,
-            "created_at_local": local_timestamp(),
-        },
-        "conditions": [],
+    checkpoint_path = Path(__file__).resolve().parent / "results" / "real_llm_results.partial.json"
+    if args.resume_partial and checkpoint_path.exists():
+        results = json.loads(checkpoint_path.read_text(encoding="utf-8"))
+        results.setdefault("metadata", {})
+        results.setdefault("conditions", [])
+        results["metadata"]["resumed_at_unix"] = time.time()
+        results["metadata"]["resumed_at_local"] = local_timestamp()
+    else:
+        results = {
+            "metadata": {
+                "models": models,
+                "api_mode": args.api_mode,
+                "temperature_conditions": temperatures,
+                "agent_b_modes": modes,
+                "hops_values": hops_values,
+                "trials_per_task": args.trials,
+                "judge_enabled": args.judge,
+                "created_at_unix": run_started_at_unix,
+                "created_at_local": local_timestamp(),
+            },
+            "conditions": [],
+        }
+
+    def write_batch_checkpoint() -> None:
+        if any("results" in condition for condition in results["conditions"]):
+            results["condition_summary"] = summarize_conditions(
+                [
+                    condition
+                    for condition in results["conditions"]
+                    if "results" in condition
+                ]
+            )
+        results["metadata"]["last_checkpoint_at_unix"] = time.time()
+        results["metadata"]["last_checkpoint_at_local"] = local_timestamp()
+        checkpoint_path.parent.mkdir(exist_ok=True, parents=True)
+        checkpoint_path.write_text(json.dumps(results, indent=2), encoding="utf-8")
+
+    def condition_key(condition: Dict[str, Any]) -> Tuple[Any, Any, Any, Any]:
+        return (
+            condition.get("model"),
+            condition.get("agent_b_mode"),
+            condition.get("hops"),
+            condition.get("temperature"),
+        )
+
+    completed_keys = {
+        condition_key(condition)
+        for condition in results["conditions"]
+        if condition.get("status") == "completed" and "results" in condition
     }
 
     original_model = args.model
@@ -829,20 +1025,46 @@ def run_batch_conditions(args: argparse.Namespace) -> Dict[str, Any]:
             for hops in hops_values:
                 args.hops = hops
                 for temperature in temperatures:
+                    key = (model, mode, hops, temperature)
+                    if key in completed_keys:
+                        print(
+                            "\n=== Skipping completed condition: "
+                            f"model={model}, mode={mode}, hops={hops}, "
+                            f"temperature={temperature} ==="
+                        )
+                        continue
+                    results["conditions"] = [
+                        condition
+                        for condition in results["conditions"]
+                        if not (
+                            condition_key(condition) == key
+                            and condition.get("status") != "completed"
+                        )
+                    ]
                     print(
                         "\n=== Condition: "
                         f"model={model}, mode={mode}, hops={hops}, "
                         f"temperature={temperature} ==="
                     )
-                    results["conditions"].append(
-                        {
-                            "model": model,
-                            "agent_b_mode": mode,
-                            "hops": hops,
-                            "temperature": temperature,
-                            "results": run_temperature_condition(args, temperature),
-                        }
+                    condition_record: Dict[str, Any] = {
+                        "model": model,
+                        "agent_b_mode": mode,
+                        "hops": hops,
+                        "temperature": temperature,
+                        "status": "running",
+                    }
+                    results["conditions"].append(condition_record)
+
+                    def checkpoint_condition(partial_run: Dict[str, Any]) -> None:
+                        condition_record["results"] = partial_run
+                        condition_record["status"] = "running"
+                        write_batch_checkpoint()
+
+                    condition_record["results"] = run_temperature_condition(
+                        args, temperature, progress_callback=checkpoint_condition
                     )
+                    condition_record["status"] = "completed"
+                    write_batch_checkpoint()
 
     args.model = original_model
     args.agent_b_mode = original_mode
@@ -914,11 +1136,28 @@ def main() -> None:
         help="Run the Cartesian product of models, temperatures, modes, and hop values.",
     )
     parser.add_argument(
+        "--resume-partial",
+        action="store_true",
+        help="For batch runs, skip completed conditions from real_llm_results.partial.json.",
+    )
+    parser.add_argument(
         "--judge",
         action="store_true",
         help="Add an LLM-as-judge pass to evaluate whether the final response respects constraints.",
     )
     parser.add_argument("--timeout", type=int, default=90)
+    parser.add_argument(
+        "--retries",
+        type=int,
+        default=2,
+        help="Retry transient API failures this many times before failing.",
+    )
+    parser.add_argument(
+        "--retry-backoff",
+        type=float,
+        default=3.0,
+        help="Initial retry delay in seconds; later retries use exponential backoff.",
+    )
     parser.add_argument("--sleep", type=float, default=0.0)
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
@@ -926,6 +1165,10 @@ def main() -> None:
         raise SystemExit("--hops must be at least 1.")
     if args.hops_values and any(hops < 1 for hops in args.hops_values):
         raise SystemExit("--hops-values entries must be at least 1.")
+    if args.retries < 0:
+        raise SystemExit("--retries must be 0 or greater.")
+    if args.retry_backoff < 0:
+        raise SystemExit("--retry-backoff must be 0 or greater.")
 
     tasks = select_tasks(args.task)
     if args.dry_run:

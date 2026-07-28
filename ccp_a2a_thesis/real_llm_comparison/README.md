@@ -32,10 +32,46 @@ Results are written to:
 real_llm_comparison/results/real_llm_results.json
 ```
 
+Generate a polished infographic after a run finishes:
+
+```bash
+python3 real_llm_comparison/generate_infographic.py
+```
+
+Default infographic output:
+
+```text
+real_llm_comparison/results/real_llm_infographic.png
+```
+
 Raw request/response logs are also written to:
 
 ```text
 real_llm_comparison/results/raw_api_calls.json
+```
+
+Batch runs also write an incremental checkpoint:
+
+```text
+real_llm_comparison/results/real_llm_results.partial.json
+```
+
+This partial file is refreshed after each completed trial pair. If a long run
+times out, inspect this file first; it should contain the completed conditions
+and the latest completed trials from the condition that was running.
+
+To continue a batch without rerunning completed conditions:
+
+```bash
+python3 real_llm_comparison/run_real_llm_comparison.py \
+  --trials 5 \
+  --model gpt-4.1-nano \
+  --temperatures 0.7 1.0 \
+  --agent-b-modes forward summarize process \
+  --hops 3 \
+  --judge \
+  --batch \
+  --resume-partial
 ```
 
 The raw call log includes request payloads, model parameters, prompts, user
@@ -78,6 +114,22 @@ python3 real_llm_comparison/run_real_llm_comparison.py \
   --model gpt-4.1-nano \
   --temperatures 0.1 0.7
 ```
+
+Transient network/API failures are retried by default:
+
+```bash
+python3 real_llm_comparison/run_real_llm_comparison.py \
+  --trials 10 \
+  --model gpt-4.1-nano \
+  --temperature 1.0 \
+  --timeout 120 \
+  --retries 4 \
+  --retry-backoff 5
+```
+
+`--retries` controls how many retry attempts happen after the first failed
+request. `--retry-backoff` is the first delay in seconds; later retries use
+exponential backoff.
 
 Agent B can use three instruction modes:
 
