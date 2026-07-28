@@ -10,6 +10,19 @@ thesis simulator repository:
 The harness calls a real LLM for Agent B (forwarding) and Agent C (final extraction
 and decision), while reusing the existing simulator tasks.
 
+## Code Layout
+
+The implementation is split by responsibility:
+
+- `run_real_llm_comparison.py`: thin compatibility wrapper for the historical command.
+- `cli.py`: argument parsing, output file writing, and top-level command flow.
+- `orchestration.py`: task selection, dry-run output, batch conditions, resume, and checkpoints.
+- `experiment.py`: Agent A/B/C trial execution and judge handling.
+- `llm_client.py`: OpenAI/OpenAI-compatible HTTP calls, retries, raw call logging, and JSON parsing.
+- `metrics.py`: CRS, accuracy, deterministic safety scans, and result aggregation.
+- `prompts.py`: prompt constants and detection-key schema.
+- `generate_infographic.py`: thesis-style result visualization.
+
 ## Quick Start
 
 From the thesis simulator root:
