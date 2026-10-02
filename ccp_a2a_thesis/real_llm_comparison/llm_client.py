@@ -23,6 +23,7 @@ class LLMClient:
         retries: int,
         retry_backoff: float,
     ) -> None:
+        self.max_output_tokens = None
         self.api_key = api_key
         self.model = model
         self.base_url = base_url.rstrip("/")
@@ -59,6 +60,8 @@ class LLMClient:
             }
             if self.temperature is not None:
                 payload["temperature"] = self.temperature
+            if self.max_output_tokens is not None:
+                payload["max_output_tokens"] = self.max_output_tokens
             response = self._post("/responses", payload, call_label=call_label)
             return self._extract_responses_text(response)
 
@@ -71,6 +74,8 @@ class LLMClient:
         }
         if self.temperature is not None:
             payload["temperature"] = self.temperature
+        if self.max_output_tokens is not None:
+            payload["max_completion_tokens"] = self.max_output_tokens
         response = self._post("/chat/completions", payload, call_label=call_label)
         return response["choices"][0]["message"]["content"]
 

@@ -249,3 +249,17 @@ python3 real_llm_comparison/run_real_llm_comparison.py --dry-run
 - Agent A is still deterministic local code. Treat this as a limitation: the
   current harness tests downstream communication drift, not LLM-generated CCP
   construction errors.
+
+## Revised municipal complaint study
+
+Use `python3 -m real_llm_comparison.study` for the new four-condition study.
+The historical commands above reproduce the earlier pilot and retain its legacy
+metrics. They are not the entry point for the revised experiment.
+
+See [the revised protocol](../docs/complaint_study_protocol.md) for dataset review,
+conditions, dry runs, independent evaluation, cost accounting and remaining work.
+Paired scenario-level exploratory intervals are available with:
+
+```bash
+python3 -m real_llm_comparison.study_analysis RUN/results.json
+```

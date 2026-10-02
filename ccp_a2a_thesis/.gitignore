@@ -11,3 +11,8 @@ __pycache__/
 results/
 logs/
 plots/
+
+# Credentials and local complaint review data
+.env
+.env.local
+real_llm_comparison/private_data/

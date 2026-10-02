@@ -1,6 +1,6 @@
 
 
-# Drift probabilities by constraint type (realistic)
+# Assumed drift probabilities by constraint type; not calibrated to real workflows
 CONSTRAINT_DRIFT_PROBS = {
     # Safety-critical (low drift)
     "allergy": 0.12,

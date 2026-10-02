@@ -1,0 +1,67 @@
+{
+  "version": "synthetic-fixture-v1",
+  "provenance": {
+    "kind": "synthetic",
+    "privacy_review": "complete",
+    "reuse_status": "synthetic"
+  },
+  "routing_directory": {},
+  "records": [
+    {
+      "id": "fixture-0",
+      "group_id": "fixture-0",
+      "split": "development",
+      "review_status": "reviewed",
+      "source": {
+        "hintContent": "Roof leaks in block C. Combustible waste is stored in the attic. Reported location: Example Street 3.",
+        "balloonContent": "Recorded address: Example Street 17."
+      },
+      "reference": {
+        "constraints": [
+          {
+            "id": "roof",
+            "requirement": "Include roof leak inspection."
+          },
+          {
+            "id": "waste",
+            "requirement": "Include assessment and removal request for combustible attic waste."
+          },
+          {
+            "id": "conflict",
+            "requirement": "Preserve both reported addresses and request location clarification."
+          }
+        ],
+        "deliverables": [
+          "Actionable draft work order",
+          "Routing uncertainty explicitly stated when no verified directory exists"
+        ]
+      }
+    },
+    {
+      "id": "fixture-1",
+      "group_id": "fixture-1",
+      "split": "heldout",
+      "review_status": "reviewed",
+      "source": {
+        "hintContent": "Streetlight is broken beside the pedestrian crossing on Sample Street 8.",
+        "balloonContent": "Recorded address: Sample Street 8."
+      },
+      "reference": {
+        "constraints": [
+          {
+            "id": "light",
+            "requirement": "Request inspection of the broken streetlight."
+          },
+          {
+            "id": "crossing",
+            "requirement": "Preserve the pedestrian crossing location."
+          }
+        ],
+        "deliverables": [
+          "Actionable draft work order",
+          "Routing uncertainty explicitly stated when no verified directory exists"
+        ]
+      }
+    }
+  ]
+}
