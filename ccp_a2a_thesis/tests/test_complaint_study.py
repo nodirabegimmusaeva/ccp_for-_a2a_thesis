@@ -72,3 +72,18 @@ class AnalysisTests(unittest.TestCase):
         r=next(x for x in contrasts(rows,100) if x['contrast']=='ccp_raw minus text')
         self.assertEqual(r['success_rate_difference'],1)
         self.assertEqual(r['scenario_bootstrap_95_interval'],[1,1])
+
+class DevelopmentDatasetTests(unittest.TestCase):
+    def test_development_set_has_explicit_anchors_and_no_heldout_cases(self):
+        path=FIXTURE.parent/'complaints_development.json'
+        data,records=load_dataset(path,'development')
+        self.assertEqual(len(records),8)
+        self.assertEqual(data['provenance']['kind'],'synthetic')
+        self.assertTrue(all(r['split']=='development' for r in records))
+        for record in records:
+            self.assertEqual(record['review_metadata']['independent_human_review'],'pending')
+            for constraint in record['reference']['constraints']:
+                self.assertTrue(constraint['retention_pass'])
+                self.assertTrue(constraint['compliance_pass'])
+                self.assertTrue(constraint['fail'])
+        with self.assertRaises(ValueError):load_dataset(path,'heldout')

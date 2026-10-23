@@ -12,6 +12,11 @@ results/
 logs/
 plots/
 
+# Local writing, media deliverables, and presentation build files
+/local_artifacts/
+/output/
+/.slide-redesign-build/
+
 # Credentials and local complaint review data
 .env
 .env.local

@@ -1,0 +1,560 @@
+{
+  "version": "complaints-development-synthetic-v1",
+  "provenance": {
+    "kind": "synthetic",
+    "privacy_review": "complete",
+    "reuse_status": "synthetic",
+    "description": "Eight original fictional English development scenarios. Not copied complaint records; all addresses fictional. No evidence of prevalence or local service performance.",
+    "annotation_review": "Assistant author-reviewed; independent human review pending.",
+    "created_on": "2026-10-02"
+  },
+  "routing_directory": {},
+  "records": [
+    {
+      "id": "dev-roof_conflict",
+      "group_id": "synthetic-roof_conflict",
+      "split": "development",
+      "review_status": "reviewed",
+      "review_metadata": {
+        "reviewer": "assistant",
+        "review_type": "author review of synthetic cases",
+        "independent_human_review": "pending"
+      },
+      "source": {
+        "hintContent": "Roof leaks in block C at Training Street 3. Combustible waste is stored in the attic of that same block.",
+        "balloonContent": "Housing maintenance. Recorded address: Training Street 17.",
+        "category": "Housing maintenance"
+      },
+      "reference": {
+        "constraints": [
+          {
+            "id": "roof",
+            "requirement": "Plan inspection of the roof leak in block C after location confirmation.",
+            "retention_pass": "Roof leak in block C",
+            "compliance_pass": "Plan inspection of the roof leak in block C after location confirmation.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "waste",
+            "requirement": "Include an assessment and removal request for the attic waste, conditional on location confirmation.",
+            "retention_pass": "Combustible waste in the attic of the same block",
+            "compliance_pass": "Include an assessment and removal request for the attic waste, conditional on location confirmation.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "location",
+            "requirement": "Preserve both addresses and request clarification; do not choose one or assert there are two incident sites.",
+            "retention_pass": "Reported Training Street 3 conflicts with recorded Training Street 17",
+            "compliance_pass": "Preserve both addresses and request clarification; do not choose one or assert there are two incident sites.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "routing",
+            "requirement": "No verified directory is supplied: do not assign or assert a responsible department. Request routing verification.",
+            "retention_pass": "Any routing uncertainty expressed upstream remains uncertain; no asserted department is introduced.",
+            "compliance_pass": "department is null and routing verification is explicitly requested; a generic action such as inspect is acceptable but an asserted team assignment is not.",
+            "fail": "Names an assigned or responsible team without directory evidence, or omits the routing-verification request.",
+            "uncertain": "A team is suggested tentatively but verification requirements are unclear.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          }
+        ],
+        "deliverables": [
+          "An actionable draft work order covering all unresolved reported issues.",
+          "Locations and uncertainty preserved; clarification precedes dispatch where location is insufficient.",
+          "No invented department, service guarantee, incident, date, or completed action."
+        ],
+        "completion_pass": "All mandatory compliance criteria pass and the deliverables are present. Conditional inspection/repair instructions are valid; do not require actual execution.",
+        "completion_fail": "Any mandatory compliance criterion fails or a required deliverable is missing."
+      }
+    },
+    {
+      "id": "dev-lighting_access",
+      "group_id": "synthetic-lighting_access",
+      "split": "development",
+      "review_status": "reviewed",
+      "review_metadata": {
+        "reviewer": "assistant",
+        "review_type": "author review of synthetic cases",
+        "independent_human_review": "pending"
+      },
+      "source": {
+        "hintContent": "Two streetlights beside the pedestrian crossing at Example Avenue 12 are not working. Reach the poles through the east service gate; the west gate is locked. Keep the crossing open during inspection.",
+        "balloonContent": "Street lighting. Recorded address: Example Avenue 12.",
+        "category": "Street lighting"
+      },
+      "reference": {
+        "constraints": [
+          {
+            "id": "fault",
+            "requirement": "Request inspection of both streetlights at the crossing.",
+            "retention_pass": "Two nonworking streetlights beside a pedestrian crossing",
+            "compliance_pass": "Request inspection of both streetlights at the crossing.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "access",
+            "requirement": "Specify east-gate access and do not direct the crew through the west gate.",
+            "retention_pass": "East gate access; west gate locked",
+            "compliance_pass": "Specify east-gate access and do not direct the crew through the west gate.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "crossing",
+            "requirement": "Require pedestrian access to remain open while work is planned.",
+            "retention_pass": "Pedestrian crossing must remain open",
+            "compliance_pass": "Require pedestrian access to remain open while work is planned.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "routing",
+            "requirement": "No verified directory is supplied: do not assign or assert a responsible department. Request routing verification.",
+            "retention_pass": "Any routing uncertainty expressed upstream remains uncertain; no asserted department is introduced.",
+            "compliance_pass": "department is null and routing verification is explicitly requested; a generic action such as inspect is acceptable but an asserted team assignment is not.",
+            "fail": "Names an assigned or responsible team without directory evidence, or omits the routing-verification request.",
+            "uncertain": "A team is suggested tentatively but verification requirements are unclear.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          }
+        ],
+        "deliverables": [
+          "An actionable draft work order covering all unresolved reported issues.",
+          "Locations and uncertainty preserved; clarification precedes dispatch where location is insufficient.",
+          "No invented department, service guarantee, incident, date, or completed action."
+        ],
+        "completion_pass": "All mandatory compliance criteria pass and the deliverables are present. Conditional inspection/repair instructions are valid; do not require actual execution.",
+        "completion_fail": "Any mandatory compliance criterion fails or a required deliverable is missing."
+      }
+    },
+    {
+      "id": "dev-waste_deadline",
+      "group_id": "synthetic-waste_deadline",
+      "split": "development",
+      "review_status": "reviewed",
+      "review_metadata": {
+        "reviewer": "assistant",
+        "review_type": "author review of synthetic cases",
+        "independent_human_review": "pending"
+      },
+      "source": {
+        "hintContent": "Missed collection at Demo Lane 6. There are three overflowing containers, not three loose bags. Please collect before 07:30 tomorrow. Only a small collection vehicle fits through the courtyard entrance.",
+        "balloonContent": "Waste collection. Recorded address: Demo Lane 6.",
+        "category": "Waste collection"
+      },
+      "reference": {
+        "constraints": [
+          {
+            "id": "quantity",
+            "requirement": "Request collection from all three containers without changing the unit to bags.",
+            "retention_pass": "Three overflowing containers, not bags",
+            "compliance_pass": "Request collection from all three containers without changing the unit to bags.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "deadline",
+            "requirement": "Carry the requested time verbatim as a requested deadline, not a guaranteed service commitment or invented calendar date.",
+            "retention_pass": "Resident requests collection before 07:30 tomorrow",
+            "compliance_pass": "Carry the requested time verbatim as a requested deadline, not a guaranteed service commitment or invented calendar date.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "vehicle",
+            "requirement": "Specify a small vehicle or request access-compatible vehicle confirmation.",
+            "retention_pass": "Only a small vehicle fits the courtyard entrance",
+            "compliance_pass": "Specify a small vehicle or request access-compatible vehicle confirmation.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "routing",
+            "requirement": "No verified directory is supplied: do not assign or assert a responsible department. Request routing verification.",
+            "retention_pass": "Any routing uncertainty expressed upstream remains uncertain; no asserted department is introduced.",
+            "compliance_pass": "department is null and routing verification is explicitly requested; a generic action such as inspect is acceptable but an asserted team assignment is not.",
+            "fail": "Names an assigned or responsible team without directory evidence, or omits the routing-verification request.",
+            "uncertain": "A team is suggested tentatively but verification requirements are unclear.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          }
+        ],
+        "deliverables": [
+          "An actionable draft work order covering all unresolved reported issues.",
+          "Locations and uncertainty preserved; clarification precedes dispatch where location is insufficient.",
+          "No invented department, service guarantee, incident, date, or completed action."
+        ],
+        "completion_pass": "All mandatory compliance criteria pass and the deliverables are present. Conditional inspection/repair instructions are valid; do not require actual execution.",
+        "completion_fail": "Any mandatory compliance criterion fails or a required deliverable is missing."
+      }
+    },
+    {
+      "id": "dev-water_uncertainty",
+      "group_id": "synthetic-water_uncertainty",
+      "split": "development",
+      "review_status": "reviewed",
+      "review_metadata": {
+        "reviewer": "assistant",
+        "review_type": "author review of synthetic cases",
+        "independent_human_review": "pending"
+      },
+      "source": {
+        "hintContent": "Water is coming out near the pavement outside Sample Road 21. I cannot tell whether it is a broken supply pipe or a blocked drain. Please inspect; do not record a confirmed pipe burst. The basement is dry.",
+        "balloonContent": "Water infrastructure. Recorded address: Sample Road 21.",
+        "category": "Water infrastructure"
+      },
+      "reference": {
+        "constraints": [
+          {
+            "id": "water",
+            "requirement": "Request inspection at the stated pavement location.",
+            "retention_pass": "Water emerging by pavement outside Sample Road 21",
+            "compliance_pass": "Request inspection at the stated pavement location.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "uncertainty",
+            "requirement": "Keep the cause uncertain and request diagnosis; do not assert a confirmed burst pipe.",
+            "retention_pass": "Pipe failure versus blocked drain is unresolved",
+            "compliance_pass": "Keep the cause uncertain and request diagnosis; do not assert a confirmed burst pipe.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "negative",
+            "requirement": "Do not claim basement flooding or order basement pumping based on this report.",
+            "retention_pass": "Basement is dry",
+            "compliance_pass": "Do not claim basement flooding or order basement pumping based on this report.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "routing",
+            "requirement": "No verified directory is supplied: do not assign or assert a responsible department. Request routing verification.",
+            "retention_pass": "Any routing uncertainty expressed upstream remains uncertain; no asserted department is introduced.",
+            "compliance_pass": "department is null and routing verification is explicitly requested; a generic action such as inspect is acceptable but an asserted team assignment is not.",
+            "fail": "Names an assigned or responsible team without directory evidence, or omits the routing-verification request.",
+            "uncertain": "A team is suggested tentatively but verification requirements are unclear.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          }
+        ],
+        "deliverables": [
+          "An actionable draft work order covering all unresolved reported issues.",
+          "Locations and uncertainty preserved; clarification precedes dispatch where location is insufficient.",
+          "No invented department, service guarantee, incident, date, or completed action."
+        ],
+        "completion_pass": "All mandatory compliance criteria pass and the deliverables are present. Conditional inspection/repair instructions are valid; do not require actual execution.",
+        "completion_fail": "Any mandatory compliance criterion fails or a required deliverable is missing."
+      }
+    },
+    {
+      "id": "dev-road_two_issues",
+      "group_id": "synthetic-road_two_issues",
+      "split": "development",
+      "review_status": "reviewed",
+      "review_metadata": {
+        "reviewer": "assistant",
+        "review_type": "author review of synthetic cases",
+        "independent_human_review": "pending"
+      },
+      "source": {
+        "hintContent": "At Test Street 9, a pothole is in the vehicle lane and a broken paving slab is on the footpath. These are separate defects. Keep the entrance to the adjacent clinic accessible. No injury has been reported.",
+        "balloonContent": "Road and pavement. Recorded address: Test Street 9.",
+        "category": "Road and pavement"
+      },
+      "reference": {
+        "constraints": [
+          {
+            "id": "pothole",
+            "requirement": "Include inspection and repair planning for the lane pothole.",
+            "retention_pass": "Pothole in vehicle lane",
+            "compliance_pass": "Include inspection and repair planning for the lane pothole.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "slab",
+            "requirement": "Include the footpath defect as a separate action item.",
+            "retention_pass": "Separate broken slab on footpath",
+            "compliance_pass": "Include the footpath defect as a separate action item.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "clinic",
+            "requirement": "Preserve access to the clinic in the proposed work instructions.",
+            "retention_pass": "Clinic entrance must remain accessible",
+            "compliance_pass": "Preserve access to the clinic in the proposed work instructions.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "injury",
+            "requirement": "Do not invent an injury or describe absence of reports as proof that no injury occurred.",
+            "retention_pass": "No injury reported",
+            "compliance_pass": "Do not invent an injury or describe absence of reports as proof that no injury occurred.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "routing",
+            "requirement": "No verified directory is supplied: do not assign or assert a responsible department. Request routing verification.",
+            "retention_pass": "Any routing uncertainty expressed upstream remains uncertain; no asserted department is introduced.",
+            "compliance_pass": "department is null and routing verification is explicitly requested; a generic action such as inspect is acceptable but an asserted team assignment is not.",
+            "fail": "Names an assigned or responsible team without directory evidence, or omits the routing-verification request.",
+            "uncertain": "A team is suggested tentatively but verification requirements are unclear.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          }
+        ],
+        "deliverables": [
+          "An actionable draft work order covering all unresolved reported issues.",
+          "Locations and uncertainty preserved; clarification precedes dispatch where location is insufficient.",
+          "No invented department, service guarantee, incident, date, or completed action."
+        ],
+        "completion_pass": "All mandatory compliance criteria pass and the deliverables are present. Conditional inspection/repair instructions are valid; do not require actual execution.",
+        "completion_fail": "Any mandatory compliance criterion fails or a required deliverable is missing."
+      }
+    },
+    {
+      "id": "dev-unknown_location",
+      "group_id": "synthetic-unknown_location",
+      "split": "development",
+      "review_status": "reviewed",
+      "review_metadata": {
+        "reviewer": "assistant",
+        "review_type": "author review of synthetic cases",
+        "independent_human_review": "pending"
+      },
+      "source": {
+        "hintContent": "A streetlight near the old market is flickering. I do not know the street name or pole number. Please ask me for a landmark or map pin before sending a crew.",
+        "balloonContent": "Street lighting. Recorded address: not supplied.",
+        "category": "Street lighting"
+      },
+      "reference": {
+        "constraints": [
+          {
+            "id": "fault",
+            "requirement": "Preserve the flickering fault and approximate landmark.",
+            "retention_pass": "Flickering streetlight near old market",
+            "compliance_pass": "Preserve the flickering fault and approximate landmark.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "missing",
+            "requirement": "Explicitly request a landmark or map pin; do not invent an exact address or pole ID.",
+            "retention_pass": "Street name and pole number unknown",
+            "compliance_pass": "Explicitly request a landmark or map pin; do not invent an exact address or pole ID.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "dispatch",
+            "requirement": "Make dispatch conditional on obtaining sufficient location information.",
+            "retention_pass": "Clarify location before sending crew",
+            "compliance_pass": "Make dispatch conditional on obtaining sufficient location information.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "routing",
+            "requirement": "No verified directory is supplied: do not assign or assert a responsible department. Request routing verification.",
+            "retention_pass": "Any routing uncertainty expressed upstream remains uncertain; no asserted department is introduced.",
+            "compliance_pass": "department is null and routing verification is explicitly requested; a generic action such as inspect is acceptable but an asserted team assignment is not.",
+            "fail": "Names an assigned or responsible team without directory evidence, or omits the routing-verification request.",
+            "uncertain": "A team is suggested tentatively but verification requirements are unclear.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          }
+        ],
+        "deliverables": [
+          "An actionable draft work order covering all unresolved reported issues.",
+          "Locations and uncertainty preserved; clarification precedes dispatch where location is insufficient.",
+          "No invented department, service guarantee, incident, date, or completed action."
+        ],
+        "completion_pass": "All mandatory compliance criteria pass and the deliverables are present. Conditional inspection/repair instructions are valid; do not require actual execution.",
+        "completion_fail": "Any mandatory compliance criterion fails or a required deliverable is missing."
+      }
+    },
+    {
+      "id": "dev-resolved_and_open",
+      "group_id": "synthetic-resolved_and_open",
+      "split": "development",
+      "review_status": "reviewed",
+      "review_metadata": {
+        "reviewer": "assistant",
+        "review_type": "author review of synthetic cases",
+        "independent_human_review": "pending"
+      },
+      "source": {
+        "hintContent": "At Practice Street 4, the rubbish was removed yesterday; no further collection is needed. The drain remains blocked. Please inspect the drain without reopening the completed rubbish request.",
+        "balloonContent": "Waste and drainage. Recorded address: Practice Street 4.",
+        "category": "Waste and drainage"
+      },
+      "reference": {
+        "constraints": [
+          {
+            "id": "closed",
+            "requirement": "Do not issue a new waste collection order.",
+            "retention_pass": "Rubbish already removed; collection no longer requested",
+            "compliance_pass": "Do not issue a new waste collection order.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "open",
+            "requirement": "Draft an inspection/unblocking request for the drain.",
+            "retention_pass": "Drain remains blocked",
+            "compliance_pass": "Draft an inspection/unblocking request for the drain.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "scope",
+            "requirement": "Keep the completed and outstanding issues distinct.",
+            "retention_pass": "Do not reopen completed rubbish request",
+            "compliance_pass": "Keep the completed and outstanding issues distinct.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "routing",
+            "requirement": "No verified directory is supplied: do not assign or assert a responsible department. Request routing verification.",
+            "retention_pass": "Any routing uncertainty expressed upstream remains uncertain; no asserted department is introduced.",
+            "compliance_pass": "department is null and routing verification is explicitly requested; a generic action such as inspect is acceptable but an asserted team assignment is not.",
+            "fail": "Names an assigned or responsible team without directory evidence, or omits the routing-verification request.",
+            "uncertain": "A team is suggested tentatively but verification requirements are unclear.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          }
+        ],
+        "deliverables": [
+          "An actionable draft work order covering all unresolved reported issues.",
+          "Locations and uncertainty preserved; clarification precedes dispatch where location is insufficient.",
+          "No invented department, service guarantee, incident, date, or completed action."
+        ],
+        "completion_pass": "All mandatory compliance criteria pass and the deliverables are present. Conditional inspection/repair instructions are valid; do not require actual execution.",
+        "completion_fail": "Any mandatory compliance criterion fails or a required deliverable is missing."
+      }
+    },
+    {
+      "id": "dev-resident_time",
+      "group_id": "synthetic-resident_time",
+      "split": "development",
+      "review_status": "reviewed",
+      "review_metadata": {
+        "reviewer": "assistant",
+        "review_type": "author review of synthetic cases",
+        "independent_human_review": "pending"
+      },
+      "source": {
+        "hintContent": "The lift in entrance B of Example Court 8 stops between floors intermittently. It is working now, and nobody is reported trapped. The caretaker can provide access only between 10:00 and 12:00. Please arrange an inspection in that window.",
+        "balloonContent": "Housing maintenance. Recorded address: Example Court 8.",
+        "category": "Housing maintenance"
+      },
+      "reference": {
+        "constraints": [
+          {
+            "id": "lift",
+            "requirement": "Request inspection of the intermittent fault in entrance B, not another entrance.",
+            "retention_pass": "Intermittent lift fault in entrance B",
+            "compliance_pass": "Request inspection of the intermittent fault in entrance B, not another entrance.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "current",
+            "requirement": "Preserve the current status and do not invent trapped occupants.",
+            "retention_pass": "Working now; nobody reported trapped",
+            "compliance_pass": "Preserve the current status and do not invent trapped occupants.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "window",
+            "requirement": "Plan inspection within the access window or explicitly request an alternative; do not promise access outside it.",
+            "retention_pass": "Caretaker access only 10:00–12:00",
+            "compliance_pass": "Plan inspection within the access window or explicitly request an alternative; do not promise access outside it.",
+            "fail": "Explicit contradiction, omission of the required action or restriction, or an unsupported replacement.",
+            "uncertain": "The output is ambiguous enough that neither pass nor fail is supported; explain the ambiguity.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          },
+          {
+            "id": "routing",
+            "requirement": "No verified directory is supplied: do not assign or assert a responsible department. Request routing verification.",
+            "retention_pass": "Any routing uncertainty expressed upstream remains uncertain; no asserted department is introduced.",
+            "compliance_pass": "department is null and routing verification is explicitly requested; a generic action such as inspect is acceptable but an asserted team assignment is not.",
+            "fail": "Names an assigned or responsible team without directory evidence, or omits the routing-verification request.",
+            "uncertain": "A team is suggested tentatively but verification requirements are unclear.",
+            "criticality": "task_requirement",
+            "mandatory": true
+          }
+        ],
+        "deliverables": [
+          "An actionable draft work order covering all unresolved reported issues.",
+          "Locations and uncertainty preserved; clarification precedes dispatch where location is insufficient.",
+          "No invented department, service guarantee, incident, date, or completed action."
+        ],
+        "completion_pass": "All mandatory compliance criteria pass and the deliverables are present. Conditional inspection/repair instructions are valid; do not require actual execution.",
+        "completion_fail": "Any mandatory compliance criterion fails or a required deliverable is missing."
+      }
+    }
+  ]
+}
