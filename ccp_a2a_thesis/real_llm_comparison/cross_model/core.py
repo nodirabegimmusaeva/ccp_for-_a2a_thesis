@@ -27,7 +27,8 @@ COMMON = (
     'no option qualifies. Do not invent candidates. '
 )
 FINAL = (
-    'Return only a JSON object with answer (string) and received_requirements (list of strings). '
+    'Return only a bare JSON object with answer (string) and received_requirements (list of strings). '
+    'Start with { and end with }. Do not use Markdown, code fences, backticks, a preamble or trailing commentary. '
     'Write answer first. It is the user-facing answer, with selections assigned to the right '
     'person/audience where relevant. In received_requirements, separately report the original '
     'requirements and preferences available to you, retaining their owners and qualifiers. '
@@ -97,8 +98,11 @@ def validate_config(config):
     if not config['models'] or not config['routes']:
         raise ValueError('Nonempty model and route definitions required.')
     for alias, model in config['models'].items():
-        if set(model) != {'provider', 'model'} or model['provider'] not in PROVIDERS:
+        if not {'provider', 'model'} <= set(model) or set(model) - {'provider', 'model', 'max_output_tokens'} or model['provider'] not in PROVIDERS:
             raise ValueError('Only configured Google/Groq endpoints are allowed; no paid fallback.')
+        if 'max_output_tokens' in model and (type(model['max_output_tokens']) is not int or
+                                             not 128 <= model['max_output_tokens'] <= 8192):
+            raise ValueError('Model output budget must be an integer between 128 and 8192.')
         if not isinstance(alias, str) or not alias or not isinstance(model['model'], str):
             raise ValueError('Invalid model alias or ID.')
         if not model['model'].startswith(PROVIDERS[model['provider']]['prefix']):
@@ -171,7 +175,9 @@ def build_request(task, job, forwarded, hop):
     elif job['condition'].startswith('text'):
         formatting = 'Return natural language with the received original requirements and separate working notes.'
     else:
-        formatting = 'Return only JSON with source (object containing request) and working_notes (string). Preserve source values while updating working_notes.'
+        formatting = ('Return only a bare JSON object with source (object containing request) and working_notes (string). '
+                      'Start with { and end with }. Do not use Markdown, code fences, backticks, a preamble or trailing commentary. '
+                      'Preserve source values while updating working_notes.')
     return COMMON + ROLES[hop] + ' ' + formatting, json.dumps(user, ensure_ascii=False)
 
 

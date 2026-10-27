@@ -1,0 +1,23 @@
+{
+  "models": {
+    "qwen": {
+      "provider": "groq",
+      "model": "qwen/qwen3.8-27b",
+      "max_output_tokens": 900
+    }
+  },
+  "routes": {
+    "qwen_only": [
+      "qwen",
+      "qwen",
+      "qwen",
+      "qwen"
+    ]
+  },
+  "settings": {
+    "temperature": null,
+    "reasoning_effort": null,
+    "max_output_tokens": 1800,
+    "request_interval_seconds": 60
+  }
+}

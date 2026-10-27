@@ -1,0 +1,100 @@
+{
+  "version": "main-study-20261027-v2",
+  "status": "frozen_before_main_v2_execution",
+  "design": {
+    "task_templates": 12,
+    "routes": [
+      "gemini_only",
+      "qwen_only"
+    ],
+    "conditions": [
+      "text",
+      "text_pinned",
+      "ccp_raw",
+      "ccp_restored"
+    ],
+    "repetitions": 3,
+    "seed": 42,
+    "runs": 288,
+    "workflow_calls": 1152,
+    "roles": [
+      "B1",
+      "B2",
+      "B3",
+      "C"
+    ],
+    "mixed_routes": "excluded; separate exploratory study only"
+  },
+  "providers_config": "docs/cross_model_extension/providers.main-v2.json",
+  "batching": {
+    "unit": "one task template and repetition, both routes and all four conditions",
+    "batches": 36,
+    "runs_per_batch": 8,
+    "returned_calls_per_complete_batch": 32,
+    "max_attempts_per_invocation": 32,
+    "execution": "one explicitly numbered batch at a time, in frozen order",
+    "resume": "same batch from saved hop; successful or invalid final outputs are never rerun"
+  },
+  "pacing": {
+    "seconds_after_previous_same_provider_attempt_finishes": 60,
+    "scope": "per provider, carried across checkpointed restarts of this study",
+    "parallel_execution": false,
+    "cross_run_or_external_account_traffic": "not coordinated; avoid concurrent use",
+    "quota_policy": "check provider free-tier quota before each batch; pause when insufficient; no automatic daily loop",
+    "token_limit_caveat": "request cap and spacing do not guarantee tokens-per-minute or daily quota compliance"
+  },
+  "errors": {
+    "automatic_retry": false,
+    "stop_on_provider_or_network_error": true,
+    "manual_retry": "retry only operational errors, same batch, unchanged settings; preserve all attempts",
+    "rate_limit": "inspect free quota; wait at least Retry-After when supplied and longer/next reset if quota exhausted",
+    "unknown_outcome": "inspect pending request; explicitly mark unknown before authorizing an operational retry",
+    "invalid_output": "retain as model output; no quality retry",
+    "provider_unavailable": "pause; no substitution or paid fallback; report unresolved coverage"
+  },
+  "budget": {
+    "new_spending_usd": 0,
+    "account_requirement": "free-tier eligible, paid billing disabled",
+    "billing_verification": "researcher confirms; runner cannot independently enforce account billing",
+    "judge_api_calls": 0,
+    "evaluation": "human review using existing fixed scoring keys"
+  },
+  "measurement": {
+    "strict_task_success": "all mandatory requirements pass and completion rule met",
+    "reported_CRS": "C received_requirements against original requirement and preference inventory",
+    "raw_preservation": "audit raw and forwarded intermediate outputs separately from reported CRS",
+    "uncertainty": "retain uncertain judgments and report bounds and coverage",
+    "paired_analysis": "models separate; task/repetition matched; aggregate repetitions within template before template bootstrap",
+    "unit_of_generalization": "12 synthetic templates; repetitions are not independent new tasks"
+  },
+  "interpretation": {
+    "protected_field": "entire original user request in source.request; no evaluator criticality labels sent to agents",
+    "sampling": "provider defaults; null temperature/reasoning settings omitted, not equated",
+    "model_identity": "requested and returned identifiers logged; not immutable weight snapshots",
+    "changes_after_freeze": "do not edit tasks, prompts, settings, scoring or schedule; document deviations in a new version; retain this snapshot",
+    "cross_model_budget_difference": "Provider-specific budgets reflect free-tier constraints; cross-model differences conflate model/provider behavior with output budget. Condition contrasts are interpreted within each model; no intrinsic model ranking."
+  },
+  "paths": {
+    "freeze": "research_artifacts/cross_model_v2/freeze",
+    "execution": "real_llm_comparison/results/cross_model/main-study-20261027-v2"
+  },
+  "generation_budgets": {
+    "gemini_max_output_tokens": 1800,
+    "groq_max_output_tokens": 900,
+    "common_within_each_model_across_all_conditions": true
+  },
+  "amendment": {
+    "reason": "Observed Groq 429 explicitly reports output tokens per minute limit 1000; requested max_tokens 1800 rejected despite full request and combined-token availability.",
+    "v1_disposition": "Preserve interrupted v1, including all attempts and its single returned B1; do not mix with v2 or reuse B1 in fresh v2.",
+    "benchmark_changes": "none; tasks, evidence, scoring keys, prompts, seeded schedule, repetitions and pacing unchanged",
+    "authorization": "User requested Groq-only output cap adjustment; Gemini kept at existing 1800 cap."
+  },
+  "development_check": {
+    "run": "development-smoke-20261027-v3",
+    "spec_hash": "3e2161bd7be44e062a1ff36523a8bffb772570c8bf94cf079b132e4c5a2aa206",
+    "returned_calls": 16,
+    "complete_runs": 4,
+    "truncations": 0,
+    "review": "investigator compatibility inspection, not blinded efficacy evaluation"
+  }
+}

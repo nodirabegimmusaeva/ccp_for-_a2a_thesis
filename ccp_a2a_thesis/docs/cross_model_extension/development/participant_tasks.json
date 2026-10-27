@@ -1,0 +1,22 @@
+{
+  "materials_version": "development-smoke-v1",
+  "status": "development_only",
+  "purpose": "provider_and_handoff_compatibility_only",
+  "synthetic": true,
+  "tasks": [
+    {
+      "task_id": "DEV-ROOM-01",
+      "group": "development_room_selection",
+      "user_request": "Recommend one meeting room for eight attendees. It must seat at least eight people, have video-conferencing equipment, and cost no more than $40 for the session. I prefer daylight, but that is optional. All listed rooms are available for the requested session. Identify your selected room. Do not claim to make a booking.",
+      "evidence": {
+        "currency": "USD",
+        "scope": "Fictional room directory. Session prices include all fees. Equipment and capacity entries are complete.",
+        "items": [
+          {"id": "DEV-A", "name": "Atrium", "capacity": 12, "video_conferencing": false, "daylight": true, "session_price": 25},
+          {"id": "DEV-B", "name": "Studio", "capacity": 8, "video_conferencing": true, "daylight": false, "session_price": 30},
+          {"id": "DEV-C", "name": "Terrace", "capacity": 10, "video_conferencing": true, "daylight": true, "session_price": 60}
+        ]
+      }
+    }
+  ]
+}
